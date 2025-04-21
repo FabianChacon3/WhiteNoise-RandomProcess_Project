@@ -1,7 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.signal import lfilter, correlate, welch
 from scipy.fft import fft, ifft, fftfreq, fftshift
+from graphics import *
 
 
 codigos  = [2,2,0,4,2,7,7,  2,2,1,4,1,9,2,  2,2,1,0,4,1,3]
@@ -70,62 +70,21 @@ noise_signal = s_t + gaussian_noise(t)                    # Adicion de ruido
 
 finalsignal = fibra_optica(noise_signal, t, fc=fc)               # aplicacion del modelo de la fibra optica
 
+# Grafica de cambios en la forma de onda
+graftimechange(t, s_t, noise_signal, finalsignal)
+
 
 # Correlación
 correlation = correlate(s_t, finalsignal, mode='full')/len(s_t)
 lags = np.arange(-len(s_t) + 1, len(s_t))
 
-# Gráfica
-plt.figure(figsize=(10, 4))
-plt.plot(lags, correlation)
-plt.title("Correlación cruzada entre señal transmitida y recibida")
-plt.xlabel("Retardo [muestras]")
-plt.ylabel("Correlación")
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# Gráfica de Correlación
+grafcorrelation(lags, correlation)
 
 
-# ---------- GRAFICAR ----------
-plt.figure(figsize=(14, 10))
-
-# 1. Señal original
-plt.subplot(3, 1, 1)
-plt.plot(t, s_t)
-plt.title("1. Señal modulada AM (sin ruido)")
-plt.ylabel("Amplitud")
-plt.grid(True)
-
-# 2. Señal con ruido
-plt.subplot(3, 1, 2)
-plt.plot(t, noise_signal)
-plt.title("2. Señal con ruido blanco")
-plt.ylabel("Amplitud")
-plt.grid(True)
-
-# 3. Señal final (después de la fibra)
-plt.subplot(3, 1, 3)
-plt.plot(t, finalsignal)
-plt.title("3. Señal después del canal de fibra óptica")
-plt.xlabel("Tiempo [s]")
-plt.ylabel("Amplitud")
-plt.grid(True)
-
-plt.tight_layout()
-
-# ---------- ESPECTRO ----------
+# PSD para la señal enviada y la señal recibida
 f, Pxx_original = welch(s_t, fs=1e6, nperseg=2048)
 f, Pxx_final = welch(finalsignal, fs=1e6, nperseg=2048)
 
-plt.figure(figsize=(12, 5))
-plt.semilogy(f, Pxx_original, label='Original')
-plt.semilogy(f, Pxx_final, label='Después de la fibra')
-plt.title("4. Densidad espectral de potencia (Welch)")
-plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Potencia [dB]")
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-
-
-plt.show()
+# Gráfica de PSD
+grafpsd(f, Pxx_original, Pxx_final)
