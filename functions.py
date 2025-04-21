@@ -31,8 +31,9 @@ def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
 
     # Convertir parámetros
     alpha_np = atenuation / 4.343  # Np/km
+
+    # Coeficiente de propagación
     beta2 = (D * 1e-6) * (lambda_m**2) / (2 * np.pi * c)  # s^2/m
-    beta2 = beta2 * 1e3  # s^2/km
 
     # Tiempo y frecuencia
     dt = t[1] - t[0]
@@ -55,28 +56,27 @@ def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
 
 
 # Filtro de dispersion
-def disperfilter(signal, t, fc=1e5, D=17e-7, L=1):
+def disperfilter(signal, t, D=17e-6, L=1,  fc=1e5):
 
-    c = 3e8  # velocidad de la luz en m/s
-    lambda_c = c / fc  # longitud de onda en metros
+    c = 3e8                    # velocidad de la luz en m/s
+    lambda_c = c / fc          # longitud de onda en metros
 
-    # Convertimos D a beta2 (en s^2/km)
+    # Coeficiente de propagación
     beta2 = (D * 1e-6) * (lambda_c**2) / (2 * np.pi * c)  # s^2/m
-    beta2 = beta2 * 1e3  # s^2/km
 
-    # Preparar FFT
+    # FFT
     N = len(t)
     dt = t[1] - t[0]
     f = fftshift(fftfreq(N, dt))
-    S = fftshift(fft(signal))
+    S = fft(signal)
 
-    # Filtro de fase
+    # Filtro inverso (fase negativa)
     phi = beta2 * (2 * np.pi * (f - fc))**2 * L
-    H = np.exp(1j * phi)
+    H_inv = np.exp(-1j * phi)
 
     # Aplicar filtro
-    S_out = S * H
-    signal_out = np.real(ifft(fftshift(S_out)))
+    S_out = S * H_inv
+    signal_out = np.real(ifft(S_out))
 
     return signal_out
 

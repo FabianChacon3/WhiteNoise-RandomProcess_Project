@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # Gráfica de cambios temporales en la señal
 def graftimechange(t, s_t, noise_signal, finalsignal):
     
-    plt.figure(figsize=(14, 10))
+    plt.figure(figsize=(12, 10))
 
     # 1. Señal original
     plt.subplot(3, 1, 1)
@@ -58,7 +58,7 @@ def grafpsd(f, Pxx_original, Pxx_final):
 
 # Grafica de la señal filtrada
 def graffilter(t, signal):
-    plt.figure(figsize=(14, 3))
+    plt.figure(figsize=(12, 3))
     plt.plot(t, signal, color='dodgerblue')
     plt.title("Señal en el dominio del tiempo")
     plt.xlabel("Tiempo [s]")

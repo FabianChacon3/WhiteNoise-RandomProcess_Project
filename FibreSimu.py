@@ -16,7 +16,7 @@ A = 10 + G                 # Número de muestras
 
 
 minlevel = 1; maxlevel = 6; bits = 50
-message = np.random.randint(minlevel, maxlevel, bits)     # Mensage digital aleatorio 
+message = 5*np.random.randint(minlevel, maxlevel, bits)     # Mensage digital aleatorio 
 
 t, s_t, fc = qam_modulator(message)                       # Mensaje modulado
 
@@ -48,9 +48,9 @@ grafpsd(f, Pxx_original, Pxx_final)
 '''
 
 # ------------------ Filtrado de la señal ---------------------
-filtrada = disperfilter(finalsignal, t, fc=fc, D=17e-9)         # Filtro de dispersion
-filtrada = freqfilter(filtrada, fc=fc)                 # Filtro de frecuencia
-filtrada = filtrada*8                                 # Ganancia
+filtrada = disperfilter(finalsignal, t, fc=fc, D=17e-6)      # Filtro de dispersion
+filtrada = freqfilter(filtrada, fc=fc)                       # Filtro de frecuencia
+filtrada = filtrada*3                                        # Ganancia
 
 #Gráfica de la señal filtrada
 graffilter(t, filtrada)
