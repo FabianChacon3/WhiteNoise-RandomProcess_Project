@@ -1,16 +1,5 @@
 import matplotlib.pyplot as plt
 
-# Gráfica de Correlación
-def grafcorrelation(lags, correlation):
-    plt.figure(figsize=(10, 4))
-    plt.plot(lags, correlation)
-    plt.title("Correlación cruzada entre señal transmitida y recibida")
-    plt.xlabel("Retardo [muestras]")
-    plt.ylabel("Correlación")
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
-
 
 # Gráfica de cambios temporales en la señal
 def graftimechange(t, s_t, noise_signal, finalsignal):
@@ -39,9 +28,22 @@ def graftimechange(t, s_t, noise_signal, finalsignal):
     plt.ylabel("Amplitud")
     plt.grid(True)
     plt.tight_layout()
-    plt.show()
 
-# ---------- ESPECTRO ----------
+
+
+# Gráfica de Correlación
+def grafcorrelation(lags, correlation):
+    plt.figure(figsize=(10, 4))
+    plt.plot(lags, correlation)
+    plt.title("Correlación cruzada entre señal transmitida y recibida")
+    plt.xlabel("Retardo [muestras]")
+    plt.ylabel("Correlación")
+    plt.grid(True)
+    plt.tight_layout()
+
+
+
+# Grafica de la PSD
 def grafpsd(f, Pxx_original, Pxx_final):
     plt.figure(figsize=(12, 5))
     plt.semilogy(f, Pxx_original, label='Original')
@@ -52,4 +54,14 @@ def grafpsd(f, Pxx_original, Pxx_final):
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.show()
+
+
+# Grafica de la señal filtrada
+def graffilter(t, signal):
+    plt.figure(figsize=(14, 3))
+    plt.plot(t, signal, color='dodgerblue')
+    plt.title("Señal en el dominio del tiempo")
+    plt.xlabel("Tiempo [s]")
+    plt.ylabel("Amplitud")
+    plt.grid(True)
+    plt.tight_layout()

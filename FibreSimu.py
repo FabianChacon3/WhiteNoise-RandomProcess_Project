@@ -28,7 +28,7 @@ finalsignal = fibra_optica(noise_signal, t, fc=fc)        # aplicacion del model
 # Grafica de cambios en la forma de onda
 graftimechange(t, s_t, noise_signal, finalsignal)
 
-
+'''
 # --------------------- Correlación ---------------------------
 correlation = correlate(s_t, finalsignal, mode='full')/len(s_t)
 lags = np.arange(-len(s_t) + 1, len(s_t))
@@ -45,3 +45,15 @@ f, Pxx_final = welch(finalsignal, fs=1e6, nperseg=2048)
 # Gráfica de PSD
 grafpsd(f, Pxx_original, Pxx_final)
 # -------------------------------------------------------------
+'''
+
+# ------------------ Filtrado de la señal ---------------------
+filtrada = disperfilter(finalsignal, t, fc=fc, D=17e-9)         # Filtro de dispersion
+filtrada = freqfilter(filtrada, fc=fc)                 # Filtro de frecuencia
+filtrada = filtrada*8                                 # Ganancia
+
+#Gráfica de la señal filtrada
+graffilter(t, filtrada)
+# -------------------------------------------------------------
+
+plt.show()

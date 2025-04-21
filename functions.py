@@ -51,3 +51,53 @@ def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
     signal_out = np.real(ifft(S_out))
     
     return signal_out
+
+
+
+# Filtro de dispersion
+def disperfilter(signal, t, fc=1e5, D=17e-7, L=1):
+
+    c = 3e8  # velocidad de la luz en m/s
+    lambda_c = c / fc  # longitud de onda en metros
+
+    # Convertimos D a beta2 (en s^2/km)
+    beta2 = (D * 1e-6) * (lambda_c**2) / (2 * np.pi * c)  # s^2/m
+    beta2 = beta2 * 1e3  # s^2/km
+
+    # Preparar FFT
+    N = len(t)
+    dt = t[1] - t[0]
+    f = fftshift(fftfreq(N, dt))
+    S = fftshift(fft(signal))
+
+    # Filtro de fase
+    phi = beta2 * (2 * np.pi * (f - fc))**2 * L
+    H = np.exp(1j * phi)
+
+    # Aplicar filtro
+    S_out = S * H
+    signal_out = np.real(ifft(fftshift(S_out)))
+
+    return signal_out
+
+
+# Filtro de frecuencia 
+def freqfilter(signal, fs=1e6, fc=1e5, bw=2e4):
+
+    N = len(signal)
+    dt = 1 / fs
+    freqs = fftshift(fftfreq(N, dt))
+    
+    # FFT de la señal
+    S = fftshift(fft(signal))
+    
+    # Filtro pasa banda
+    filtro = np.logical_and(freqs >= (fc - bw/2), freqs <= (fc + bw/2)).astype(float)
+
+    # Aplicar filtro
+    S_filtrado = S * filtro
+
+    # Volver al dominio del tiempo
+    signal_filtrada = np.real(ifft(fftshift(S_filtrado)))
+    
+    return signal_filtrada
