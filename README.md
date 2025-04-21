@@ -1,4 +1,4 @@
 # WhiteNoise-RandomProcess_Project
-2204277 -Jaiver
-2214192 -Yo
-2210413 - Mi amorcito linda
+2204277 -Jaiver Buitrago
+2214192 -Fabián Chacón
+2210413 - Nohelia Agudelo
