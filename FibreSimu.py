@@ -15,10 +15,13 @@ A = 10 + G                 # Número de muestras
 
 
 
-minlevel = 1; maxlevel = 6; bits = 50
-message = 5*np.random.randint(minlevel, maxlevel, bits)     # Mensage digital aleatorio 
+minlevel = 1; maxlevel = 6; bits = 100
+message = 2*np.random.randint(minlevel, maxlevel, bits)     # Mensage digital aleatorio 
 
-t, s_t, fc = qam_modulator(message)                       # Mensaje modulado
+fs = 1e8            # Frecuencia de muestreo
+fc = 1e6            # Frecuencia portadora
+
+t, s_t = qam_modulator(message, fc=fc, fs=fs)     # Mensaje modulado
 
 noise_signal = s_t + gaussian_noise(t, A)                 # Adicion de ruido
 
@@ -27,6 +30,7 @@ finalsignal = fibra_optica(noise_signal, t, fc=fc)        # aplicacion del model
 
 # Grafica de cambios en la forma de onda
 graftimechange(t, s_t, noise_signal, finalsignal)
+
 
 '''
 # --------------------- Correlación ---------------------------
@@ -48,9 +52,9 @@ grafpsd(f, Pxx_original, Pxx_final)
 '''
 
 # ------------------ Filtrado de la señal ---------------------
-filtrada = disperfilter(finalsignal, t, fc=fc, D=17e-6)      # Filtro de dispersion
-filtrada = freqfilter(filtrada, fc=fc)                       # Filtro de frecuencia
-filtrada = filtrada*3                                        # Ganancia
+filtrada = disperfilter(finalsignal, t, fc=fc, D=17)           # Filtro de dispersion
+filtrada = freqfilter(filtrada, fc=fc, fs=fs, bw=1e4)    # Filtro de frecuencia
+filtrada = filtrada*3                                    # Ganancia
 
 #Gráfica de la señal filtrada
 graffilter(t, filtrada)

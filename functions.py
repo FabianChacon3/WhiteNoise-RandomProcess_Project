@@ -10,7 +10,7 @@ def gaussian_noise(t, A):
     return x_gauss
 
 # Modulador QAM modo AM
-def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e5, fs=1e6):
+def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e7, fs=1e8):
     Ns = int(fs * Tbit)                    # Muestras por bit
     total_samples = Ns * len(message)      # Total de muestras
     t = np.arange(0, total_samples) / fs   # Vector de tiempo
@@ -21,10 +21,10 @@ def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e5, fs=1e6):
     # Modulación AM
     s_t = A * (1 + ka * message_expanded) * np.cos(2 * np.pi * fc * t)
 
-    return t, s_t, fc
+    return t, s_t
 
 # Simula la atenuación y dispersion en una fibra optica monomodo
-def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
+def fibra_optica(signal, t, D=17, L=0.1, atenuation=0.2, fc=1e7):
     # Constantes
     c = 3e8  # velocidad de la luz (m/s)
     lambda_m = c / fc  # longitud de onda en metros a partir de fc
@@ -44,7 +44,7 @@ def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
     S = fft(signal)
 
     # Respuesta del canal
-    phi = beta2 * (2 * np.pi * (f - fc))**2 * L
+    phi = beta2 * (2 * np.pi * (f - fc))**2 * (L*1e3)
     H = np.exp(-alpha_np * L) * np.exp(1j * phi)
 
     # Aplicar canal
@@ -56,7 +56,7 @@ def fibra_optica(signal, t, D=17e-6, L=1, atenuation=0.2, fc=1e5):
 
 
 # Filtro de dispersion
-def disperfilter(signal, t, D=17e-6, L=1,  fc=1e5):
+def disperfilter(signal, t, D=17, L=0.1,  fc=1e7):
 
     c = 3e8                    # velocidad de la luz en m/s
     lambda_c = c / fc          # longitud de onda en metros
@@ -71,7 +71,7 @@ def disperfilter(signal, t, D=17e-6, L=1,  fc=1e5):
     S = fft(signal)
 
     # Filtro inverso (fase negativa)
-    phi = beta2 * (2 * np.pi * (f - fc))**2 * L
+    phi = beta2 * (2 * np.pi * (f - fc))**2 * (L*1e3)
     H_inv = np.exp(-1j * phi)
 
     # Aplicar filtro
@@ -82,7 +82,7 @@ def disperfilter(signal, t, D=17e-6, L=1,  fc=1e5):
 
 
 # Filtro de frecuencia 
-def freqfilter(signal, fs=1e6, fc=1e5, bw=2e4):
+def freqfilter(signal, fs=1e8, fc=1e7, bw=2e4):
 
     N = len(signal)
     dt = 1 / fs
@@ -98,6 +98,6 @@ def freqfilter(signal, fs=1e6, fc=1e5, bw=2e4):
     S_filtrado = S * filtro
 
     # Volver al dominio del tiempo
-    signal_filtrada = np.real(ifft(fftshift(S_filtrado)))
+    signal_filtrada = np.real(ifft(S_filtrado))
     
     return signal_filtrada
