@@ -65,3 +65,22 @@ def graffilter(t, signal):
     plt.ylabel("Amplitud")
     plt.grid(True)
     plt.tight_layout()
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def grafespectro(senal_modulada, fc, fs):
+    N = len(senal_modulada)
+    f = np.fft.fftfreq(N, 1/fs)
+    S = np.fft.fft(senal_modulada)
+    S_shifted = np.fft.fftshift(np.abs(S)/N)
+    f_shifted = np.fft.fftshift(f)
+
+    plt.figure(figsize=(10, 4))
+    plt.plot(f_shifted, S_shifted)
+    plt.title("Espectro de la señal AM")
+    plt.xlabel("Frecuencia [Hz]")
+    plt.ylabel("Magnitud")
+    plt.grid(True)
+    plt.xlim(fc - 3*fc, fc + 3*fc)
+    plt.tight_layout()
