@@ -10,7 +10,7 @@ def gaussian_noise(t, A):
     return x_gauss
 
 # Modulador QAM modo AM
-def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e7, fs=1e8):
+def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e9, fs=5e9):
     Ns = int(fs * Tbit)                    # Muestras por bit
     total_samples = Ns * len(message)      # Total de muestras
     t = np.arange(0, total_samples) / fs   # Vector de tiempo
@@ -24,7 +24,7 @@ def qam_modulator(message, Tbit=0.001, A=1, ka=0.5, fc=1e7, fs=1e8):
     return t, s_t
 
 # Simula la atenuación y dispersion en una fibra optica monomodo
-def fibra_optica(signal, t, D=17, L=0.1, atenuation=0.2, fc=1e7):
+def fibra_optica(signal, t, D=17, L=0.1, atenuation=0.2, fc=1e9):
     # Constantes
     c = 3e8  # velocidad de la luz (m/s)
     lambda_m = c / fc  # longitud de onda en metros a partir de fc
@@ -56,7 +56,7 @@ def fibra_optica(signal, t, D=17, L=0.1, atenuation=0.2, fc=1e7):
 
 
 # Filtro de dispersion
-def disperfilter(signal, t, D=17, L=0.1,  fc=1e7):
+def disperfilter(signal, t, D=17, L=0.1,  fc=1e9):
 
     c = 3e8                    # velocidad de la luz en m/s
     lambda_c = c / fc          # longitud de onda en metros
@@ -82,7 +82,7 @@ def disperfilter(signal, t, D=17, L=0.1,  fc=1e7):
 
 
 # Filtro de frecuencia 
-def freqfilter(signal, fs=1e8, fc=1e7, bw=2e4):
+def freqfilter(signal, fs=5e9, fc=1e9, bw=2e4):
 
     N = len(signal)
     dt = 1 / fs

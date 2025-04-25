@@ -11,14 +11,12 @@ def graftimechange(t, s_t, noise_signal, finalsignal):
     plt.plot(t, s_t)
     plt.title("1. Señal modulada AM (sin ruido)")
     plt.ylabel("Amplitud")
-    plt.grid(True)
 
     # 2. Señal con ruido
     plt.subplot(3, 1, 2)
     plt.plot(t, noise_signal)
     plt.title("2. Señal con ruido blanco")
     plt.ylabel("Amplitud")
-    plt.grid(True)
 
     # 3. Señal final (después de la fibra)
     plt.subplot(3, 1, 3)
@@ -26,7 +24,6 @@ def graftimechange(t, s_t, noise_signal, finalsignal):
     plt.title("3. Señal después del canal de fibra óptica")
     plt.xlabel("Tiempo [s]")
     plt.ylabel("Amplitud")
-    plt.grid(True)
     plt.tight_layout()
 
 
@@ -56,6 +53,19 @@ def grafpsd(f, Pxx_original, Pxx_final):
     plt.tight_layout()
 
 
+
+# Gráfica de la funcion de densidad de probabilidad
+def grafPDF(entrada, salida):
+    plt.figure(figsize=(12, 5))
+    plt.hist(entrada, bins=100, density=True, alpha=0.6, label="Entrada")
+    plt.hist(salida, bins=100, density=True, alpha=0.6, label="Salida")
+    plt.xlabel("Valor de la señal") 
+    plt.ylabel("Densidad de probabilidad")  
+    plt.title("Distribución de la señal antes y después del canal")
+    plt.legend()
+
+
+
 # Grafica de la señal filtrada
 def graffilter(t, signal):
     plt.figure(figsize=(12, 3))
@@ -66,8 +76,10 @@ def graffilter(t, signal):
     plt.grid(True)
     plt.tight_layout()
 
+
+
+
 import numpy as np
-import matplotlib.pyplot as plt
 
 def grafespectro(senal_modulada, fc, fs):
     N = len(senal_modulada)
@@ -76,11 +88,11 @@ def grafespectro(senal_modulada, fc, fs):
     S_shifted = np.fft.fftshift(np.abs(S)/N)
     f_shifted = np.fft.fftshift(f)
 
-    plt.figure(figsize=(10, 4))
+    plt.figure(figsize=(6, 4))
     plt.plot(f_shifted, S_shifted)
     plt.title("Espectro de la señal AM")
     plt.xlabel("Frecuencia [Hz]")
     plt.ylabel("Magnitud")
     plt.grid(True)
-    plt.xlim(fc - 3*fc, fc + 3*fc)
+    plt.xlim(fc - 1e5, fc + 1e5)
     plt.tight_layout()
