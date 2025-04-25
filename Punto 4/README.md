@@ -35,8 +35,6 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 - **PSD**: Se observa un aumento de la banda ocupada por la señal tras pasar por la fibra, confirmando el efecto de dispersión.
 - **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada.
 
-Ahhh buena esa bro, eso **sí vale la pena mencionarlo**, pero con estilo. Esos valores **aportan un análisis cuantitativo importante**, que complementa lo visual.
-
 ### Análisis Cuantitativo
 
 - **Estadísticas de la señal**:
