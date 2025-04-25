@@ -47,7 +47,7 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 
 | Señal aleatoria (varios bits) | Pulso único |
 |-------------------------------|-------------|
-| ![](imagenes/PDF1.png) | ![](imagenes/PDF2.png) |
+| ![](images/PDF1.png) | ![](images/PDF2.png) |
 
 *Figura 4. Cambios en la Funcion de Densidad de Probabilidad.*
 
