@@ -37,7 +37,7 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 
 Ahhh buena esa bro, eso **sí vale la pena mencionarlo**, pero con estilo. Esos valores **aportan un análisis cuantitativo importante**, que complementa lo visual.
 
-### 📊 Análisis Cuantitativo
+### Análisis Cuantitativo
 
 - **Estadísticas de la señal**:
   - La **media** de la señal apenas cambia entre entrada y salida, lo que indica que el canal no introduce sesgo, aunque sí hay pequeñas variaciones.
