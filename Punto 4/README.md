@@ -1,6 +1,6 @@
 # Simulación de Ruido Blanco Gaussiano y Dispersión en Fibra Óptica
 
-Este proyecto simula un sistema de transmisión óptico donde se evalúa el impacto del **ruido blanco gaussiano** y la **dispersión cromática** sobre una señal digital modulada. El objetivo es analizar cómo estos fenómenos degradan la señal y a partir de esto proponer un metodo para la recuperación de la señal.
+Este proyecto simula un sistema de transmisión óptico donde se evalúa el impacto del **ruido blanco gaussiano** y la **dispersión cromática** sobre una señal digital modulada a partir de medidas estadisticas.
 
 ## Estructura del Proyecto
 
