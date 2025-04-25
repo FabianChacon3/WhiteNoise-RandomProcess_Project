@@ -29,11 +29,25 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 
 ## Resultados y Análisis
 
-- **Ensanchamiento temporal**: La dispersión genera un ensanchamiento temporal de los pulsos, lo cual produce solapamiento entre bits (interferencia intersimbólica).
-- **Ruido gaussiano**: Afecta principalmente la amplitud, generando una distribución más dispersa en la salida.
-- **Correlación cruzada**:  Se evidencia que la señal recibida ha perdido estructura debido al canal dispersivo por la forma ancha y difusa del patrón, sin un pico definido. 
-- **PSD**: Se observa un aumento de la banda ocupada por la señal tras pasar por la fibra, confirmando el efecto de dispersión.
-- **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada.
+![Figura 1. Cambios de la señal en el tiempo](images/Changetime1.png)
+*Figura 1. Cambios de la señal en el tiempo.*
+
+- **Ensanchamiento temporal**: La dispersión genera un ensanchamiento temporal de los pulsos, lo cual produce solapamiento entre bits (interferencia intersimbólica). Figura 1.c
+- **Ruido gaussiano**: Afecta principalmente la amplitud, generando una distribución más dispersa en la salida. Figura 1.b
+- **Correlación cruzada**:  Se evidencia que la señal recibida ha perdido estructura debido al canal dispersivo por la forma ancha y difusa del patrón, sin un pico definido. Figura 2
+![Figura 2. Correlación cruzada de la señal antes y despues de pasar por el modelo de canal](images/Corr1.png)
+*Figura 2. Correlación cruzada de la señal antes y despues de pasar por el modelo de canal.*
+
+
+- **PSD**: Se observa un aumento de la banda ocupada por la señal tras pasar por la fibra, confirmando el efecto de dispersión. Figura 3
+![Figura 3. Cambios en la Densidad Espectral de Potencia](images/PSD1.png)
+*Figura 3. Cambios en la Densidad Espectral de Potencia.*
+
+- **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada. Figura 4
+| Señal aleatoria (varios bits) | Pulso único |
+|-------------------------------|-------------|
+| ![](imagenes/PDF1.png) | ![](imagenes/PDF2.png) |
+*Figura 4. Cambios en la Funcion de Densidad de Probabilidad.*
 
 ### Análisis Cuantitativo
 
@@ -52,4 +66,6 @@ Se implementan dos filtros digitales para recuperar la señal:
 - **Filtro inverso de dispersión cromática**, basado en invertir la fase generada por el canal.
 - **Filtro de frecuencia pasa banda**, centrado en la frecuencia portadora con un ancho de banda ajustado.
 
-Estos filtros ayudan a reducir el ensanchamiento y mejorar la correlación con la señal original.
+Estos filtros ayudan a reducir el ensanchamiento y mejorar la correlación con la señal original. Figura 5
+![Figura 5. Señal despues de filtrado](images/Changetime1.png)
+*Figura 1. Señal despues de filtrado.*
