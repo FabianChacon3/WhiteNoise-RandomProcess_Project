@@ -17,7 +17,7 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 ## Tareas Desarrolladas
 
 1. **Generación de señal digital aleatoria** dentro de un rango de niveles determinado.
-2. **Modulación AM tipo QAM**, donde la amplitud de la portadora varía según la señal digital.
+2. **Modulación QAM tipo AM**, donde la amplitud de la portadora varía según la señal digital.
 3. **Inyección de ruido blanco gaussiano**, suavizado mediante convolución recursiva (ventana cuadrada).
 4. **Simulación del canal de fibra óptica**, que incluye atenuación y dispersión cromática (β₂).
 5. **Análisis de correlación cruzada** entre señal transmitida y recibida.
@@ -43,13 +43,15 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 ![Figura 3. Cambios en la Densidad Espectral de Potencia](images/PSD1.png)
 *Figura 3. Cambios en la Densidad Espectral de Potencia.*
 
-- **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada. Figura 4
+- **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada, esto se evidencia de mejor manera al enviar un único pulso, ya que muestra como cambia la probabilidad dejando de lado una distribucion unica en el pulso enviado y se esparce al rededor de el.
 
 | Señal aleatoria (varios bits) | Pulso único |
 |-------------------------------|-------------|
 | ![](images/PDF1.png) | ![](images/PDF2.png) |
 
 *Figura 4. Cambios en la Funcion de Densidad de Probabilidad.*
+
+  *-En la PDF ademas de los niveles de la señal que inician desde 2 y van hasta 6 en numeros enteros, tambien salen valores tomados por la portadora, los cuales para este analisis son despreciables*
 
 ### Análisis Cuantitativo
 
@@ -65,9 +67,9 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 
 Se implementan dos filtros digitales para recuperar la señal:
 
-- **Filtro inverso de dispersión cromática**, basado en invertir la fase generada por el canal.
+- **Filtro inverso de dispersión cromática**, basado en invertir la fase generada por el canal a partir de la funcion que representa el cambio en la fase en el canal.
 - **Filtro de frecuencia pasa banda**, centrado en la frecuencia portadora con un ancho de banda ajustado.
 
 Estos filtros ayudan a reducir el ensanchamiento y mejorar la correlación con la señal original. Figura 5
-![Figura 5. Señal despues de filtrado](images/Changetime1.png)
+![Figura 5. Señal despues de filtrado](images/Filter1.png)
 *Figura 1. Señal despues de filtrado.*
