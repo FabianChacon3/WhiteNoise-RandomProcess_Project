@@ -44,9 +44,11 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 *Figura 3. Cambios en la Densidad Espectral de Potencia.*
 
 - **PDF**: La señal de salida tiene mayor varianza y menor concentración alrededor de la media debido a la dispersión generada. Figura 4
+
 | Señal aleatoria (varios bits) | Pulso único |
 |-------------------------------|-------------|
 | ![](imagenes/PDF1.png) | ![](imagenes/PDF2.png) |
+
 *Figura 4. Cambios en la Funcion de Densidad de Probabilidad.*
 
 ### Análisis Cuantitativo
