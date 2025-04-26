@@ -1,37 +1,56 @@
 import numpy as np
-from scipy.signal import lfilter
+from scipy.signal import lfilter, welch
 
-def generar_AR1(alpha, sigma, n):
-    w = np.random.normal(0, sigma, n)
-    x = np.zeros(n)
+# --- Generación de señales ---
+def generar_AR1(alpha, sigma_w, n, media=0):
+    """Genera señal AR(1) con media y varianza personalizables"""
+    w = np.random.normal(0, sigma_w, n)
+    x = np.zeros(n) + media
     for i in range(1, n):
-        x[i] = alpha * x[i-1] + w[i]
+        x[i] = alpha * (x[i-1] - media) + w[i] + media
     return x
 
-def sistema_no_lineal(x):
-    return x**2
-
+# --- Filtros ---
 def filtro_fir_custom(x, a):
+    """Filtro FIR: h[k] = [1, -1/a, 1/(2a)]"""
     b = [1, -1/a, 1/(2*a)]
     return lfilter(b, [1], x)
 
 def filtro_impulso(x):
-    h = np.zeros(3)
-    h[2] = 3
+    """Filtro h[k] = 3δ[k-2] (retardo de 2 muestras, ganancia 3)"""
+    h = np.array([0, 0, 3])
     return np.convolve(x, h, mode='same')
 
-def filtro_senoidal(x, frecuencia=0.1, fs=1):
+def filtro_senoidal(x, frecuencia=0.01, fs=1000):
+    """Filtro senoidal: h[k] = sin(2πfk/fs)"""
     n = np.arange(len(x))
     h = np.sin(2 * np.pi * frecuencia * n / fs)
+    h = h / np.max(np.abs(h))  # Normalización por máximo
     return np.convolve(x, h, mode='same')
 
-def filtro_sinc(x, ancho=0.1, fs=1):
-    n = np.arange(-50, 51)
+def filtro_sinc(x, ancho=0.05, fs=1000):
+    """Filtro sinc: h[k] = sinc(2*ancho*k/fs)"""
+    n = np.arange(-100, 101)
     h = np.sinc(2 * ancho * (n / fs))
+    h = h / np.max(np.abs(h))  # Normalización por máximo
     return np.convolve(x, h, mode='same')
+
+def sistema_no_lineal(x):
+    """Sistema no lineal: y(t) = x²(t) (versión corregida)"""
+    return x**2 - np.mean(x**2)  # Quita el componente DC
 
 def calcular_autocorrelacion(x):
+    """Calcula autocorrelación normalizada CENTRADA en τ=0"""
     n = len(x)
-    x_mean = np.mean(x)
-    autocorr = np.correlate(x - x_mean, x - x_mean, mode='full') / n
-    return autocorr
+    x_centrada = x - np.mean(x)
+    autocorr = np.correlate(x_centrada, x_centrada, mode='full') / n
+    return autocorr  # Devuelve la autocorrelación completa (no recortada)
+
+def calcular_PSD(x, fs):
+    """Calcula PSD en dB usando Welch"""
+    f, Pxx = welch(x, fs, nperseg=1024)
+    return f, 10 * np.log10(Pxx)
+
+def calcular_estadisticas(x):
+    """Retorna media y varianza"""
+    return np.mean(x), np.var(x)
