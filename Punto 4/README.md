@@ -10,9 +10,26 @@ En este punto se simula un sistema de transmisión óptico donde se evalúa el i
 
 ## Contexto
 
-En una red metropolitana de fibra óptica que conecta universidades y centros de datos, se transmite información digital a 1 Gbps mediante modulación en cuadratura (QAM). Sin embargo, la dispersión cromática provoca que las señales de diferentes longitudes de onda viajen a velocidades ligeramente distintas, generando distorsión acumulativa en el receptor. Además, el sistema se ve afectado por ruido térmico y de cuantización, modelado como ruido blanco gaussiano.
+En una red metropolitana de fibra óptica que conecta universidades y centros de datos, se transmite información digital a 1 Gbps mediante modulación en cuadratura (QAM). Sin embargo, la dispersión cromática provoca que las señales de diferentes longitudes de onda viajen a velocidades ligeramente distintas, generando distorsión acumulativa en el receptor, esto se puede modelar como diferentes desplazamientos en fase de la señal. Además, el sistema se ve afectado por ruido térmico y de cuantización, modelado como ruido blanco gaussiano.
 
 La empresa responsable de la red necesita evaluar el impacto de la dispersión sobre el ruido del sistema y proponer estrategias de mitigación, como el uso de filtros digitales adaptados o ecualizadores.
+
+**_Modelo Matemático de la Dispersión Cromática:_**  
+Para modelar la dispersión cromática en la fibra óptica, se utilizó una representación en el dominio de la frecuencia mediante una respuesta al impulso del canal dada por:
+
+$$
+H(f) = e^{-j \pi \beta_2 L f^2}
+$$
+
+**Donde:**
+
+- \(H(f)\) es la respuesta en frecuencia del canal afectado por dispersión.  
+- \(\beta_2\) es el parámetro de dispersión cromática de segundo orden (ps\(^2\)/km), característico del tipo de fibra utilizada.  
+- \(L\) es la longitud total de la fibra óptica (en km).  
+- \(f\) es la frecuencia relativa a la portadora (Hz).  
+
+_Este modelo refleja cómo los diferentes componentes espectrales de la señal sufren un retardo de fase cuadrático con la frecuencia, generando un ensanchamiento temporal de los pulsos en el dominio del tiempo, y por tanto, una distorsión acumulativa en la señal recibida._
+
 
 ## Tareas Desarrolladas
 
@@ -56,6 +73,12 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 
 ### Análisis Cuantitativo
 
+```
+Entrada -> media: -7.802867685313685e-15 varianza: 8.969999999999981  
+Salida  -> media: 0.0018743888178939195 varianza: 8.429276934146086  
+Coeficiente de correlación: 0.9567073434985564
+```
+
 - **Estadísticas de la señal**:
   - La **media** de la señal apenas cambia entre entrada y salida, lo que indica que el canal no introduce sesgo, aunque sí hay pequeñas variaciones.
   - La **varianza** se reduce ligeramente lo que refleja cierta atenuación del contenido energético tras pasar por la fibra.
@@ -74,3 +97,5 @@ Se implementan dos filtros digitales para recuperar la señal:
 Estos filtros ayudan a reducir el ensanchamiento y mejorar la correlación con la señal original. Figura 5
 ![Figura 5. Señal despues de filtrado](images/Filter1.png)
 *Figura 5. Señal despues de filtrado.*
+
+En la Figura 5 Se puede evidenciar como se intenta recuperar la forma del mensaje sin embargo aun no es lo suficientemente optimo, se necesitan metodos mas robustos que los filtros propuestos para poder recuperar el mensaje correctamente.
