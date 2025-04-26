@@ -49,9 +49,10 @@ La empresa responsable de la red necesita evaluar el impacto de la dispersión s
 |-------------------------------|-------------|
 | ![](images/PDF1.png) | ![](images/PDF2.png) |
 
-*Figura 4. Cambios en la Funcion de Densidad de Probabilidad.*
+*Figura 4. Cambios en la Función de Densidad de Probabilidad.*
+<br>
+  *-Nota: En esta simulación, los niveles válidos van de 2 a 6. Las amplitudes que no pertenecen a estos niveles corresponden a la envolvente de la portadora y no son relevantes para el análisis.*
 
-  *-En la PDF ademas de los niveles de la señal que inician desde 2 y van hasta 6 en numeros enteros, tambien salen valores tomados por la portadora, los cuales para este analisis son despreciables*
 
 ### Análisis Cuantitativo
 
@@ -72,4 +73,4 @@ Se implementan dos filtros digitales para recuperar la señal:
 
 Estos filtros ayudan a reducir el ensanchamiento y mejorar la correlación con la señal original. Figura 5
 ![Figura 5. Señal despues de filtrado](images/Filter1.png)
-*Figura 1. Señal despues de filtrado.*
+*Figura 5. Señal despues de filtrado.*
